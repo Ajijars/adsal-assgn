@@ -1,0 +1,42 @@
+
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int arr[20], sub[20], n;
+
+void subsets(int pos, int k) {
+    if (pos == n) {
+        cout << "[";
+        for (int i = 0; i < k; i++) {
+            cout << sub[i];
+            if (i < k - 1) cout << ",";
+        }
+        cout << "]" << endl;
+        return;
+    }
+
+    subsets(pos + 1, k);
+
+    if (pos == 0 || arr[pos] != arr[pos - 1] || 
+        (k > 0 && sub[k - 1] == arr[pos - 1])) {
+        sub[k] = arr[pos];
+        subsets(pos + 1, k + 1);
+    }
+}
+
+int main() {
+    cout << "Enter the size of array: ";
+    cin >> n;
+
+    cout << "Enter the elements of array: ";
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    sort(arr, arr + n);
+
+    cout << "Distinct subsets are:" << endl;
+    subsets(0, 0);
+
+    return 0;
+}

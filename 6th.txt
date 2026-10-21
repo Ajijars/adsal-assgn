@@ -1,0 +1,43 @@
+
+#include <iostream>
+using namespace std;
+
+int task[4] = {10, 20, 30, 40};
+
+int check(int D, int cap) {
+    int days = 1, work = 0;
+
+    for (int i = 0; i < 4; i++) {
+        if (work + task[i] > cap) {
+            days++;
+            work = task[i];
+        } else {
+            work += task[i];
+        }
+    }
+
+    return days <= D;
+}
+
+int minWorkPerDay(int D) {
+    int low = 40, high = 100;
+
+    while (low < high) {
+        int mid = (low + high) / 2;
+
+        if (check(D, mid))
+            high = mid;
+        else
+            low = mid + 1;
+    }
+
+    return low;
+}
+
+int main() {
+    int D = 2;
+
+    cout << "Minimum work per day: " << minWorkPerDay(D);
+
+    return 0;
+}
